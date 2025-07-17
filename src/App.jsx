@@ -248,52 +248,52 @@ const isInView = useInView(ref, { once: false, amount: 0.5 });
 
 </main>
 
+{/* 🎓 Education Section */}
+<section className="px-4 py-16 sm:px-6 max-w-5xl mx-auto relative z-10">
+  <h2 className="text-3xl sm:text-4xl font-bold mb-10 text-center">Education</h2>
 
-      {/* 🎓 Education Section */}
-      <section className="px-6 py-24 max-w-5xl mx-auto relative z-10">
-        <h2 className="text-4xl font-bold mb-14 text-center">Education</h2>
+  <div className="space-y-10 sm:space-y-12">
+    {[
+      {
+        title: "Sahyadri College of Engineering and Management",
+        location: "Mangaluru, Karnataka",
+        degree: "B.E. in Computer Science and Engineering",
+        grade: "CGPA: 9.48",
+        year: "2022 – Present",
+      },
+      {
+        title: "Dandathirtha Pre-University College",
+        location: "Kapu, Udupi, Karnataka",
+        degree: "12th Board - Science, PCMB",
+        grade: "Percentage: 96%",
+        year: "2020 – 2022",
+      },
+      {
+        title: "Dandathirtha English Medium School",
+        location: "Kapu, Udupi, Karnataka",
+        degree: "10th Grade",
+        grade: "Percentage: 95.33%",
+        year: "2010 – 2020",
+      },
+    ].map((edu, i) => (
+      <motion.div
+        key={i}
+        initial={{ opacity: 0, x: -100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, delay: i * 0.2 }}
+        className="border-l-4 border-purple-electric pl-6 pr-4 py-5 bg-white/5 backdrop-blur-sm rounded-lg"
+      >
+        <h3 className="text-lg sm:text-xl font-semibold">{edu.title}</h3>
+        <p className="text-sm sm:text-base text-gray-400 mb-1">{edu.location}</p>
+        <p className="text-base sm:text-lg text-white">{edu.degree}</p>
+        <p className="text-sm text-gray-300">{edu.grade}</p>
+        <p className="text-xs text-gray-500 mt-1">{edu.year}</p>
+      </motion.div>
+    ))}
+  </div>
+</section>
 
-        <div className="space-y-12">
-          {[
-            {
-              title: "Sahyadri College of Engineering and Management",
-              location: "Mangaluru, Karnataka",
-              degree: "B.E. in Computer Science and Engineering",
-              grade: "CGPA: 9.48",
-              year: "2022 – Present",
-            },
-            {
-              title: "Dandathirtha Pre-University College",
-              location: "Kapu, Udupi, Karnataka",
-              degree: "12th Board - Science, PCMB",
-              grade: "Percentage: 96%",
-              year: "2020 – 2022",
-            },
-            {
-              title: "Dandathirtha English Medium School",
-              location: "Kapu, Udupi, Karnataka",
-              degree: "10th Grade",
-              grade: "Percentage: 95.33%",
-              year: "2010 – 2020",
-            },
-          ].map((edu, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: i * 0.2 }}
-              className="border-l-4 border-purple-electric pl-8 py-6 bg-white/5 backdrop-blur-sm rounded-lg"
-            >
-              <h3 className="text-xl md:text-2xl font-semibold">{edu.title}</h3>
-              <p className="text-sm md:text-base text-gray-400 mb-1">{edu.location}</p>
-              <p className="text-base md:text-lg text-white">{edu.degree}</p>
-              <p className="text-sm text-gray-300">{edu.grade}</p>
-              <p className="text-xs text-gray-500 mt-1">{edu.year}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
 
       {/* ⚡️ Tech Stack */}
       <section className="px-6 py-20 max-w-6xl mx-auto relative z-10">
