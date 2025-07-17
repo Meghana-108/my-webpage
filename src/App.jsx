@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FiDownload } from "react-icons/fi";
+
 
 // import { FaPalette } from "react-icons/fa";
 // import { FaMagic } from "react-icons/fa";
@@ -22,7 +24,7 @@ const getAllProjects = () => ([
     tech: ["React.js", "Node.js", "tailwindcss", "SQL"],
     date: "Aug 2024",
     img: milletImg,
-    github: "https://github.com/yourusername/millet-connect",
+    github: "https://github.com/Meghana-108/millet-connect.git",
     points: [
       "Developed a millet awareness platform with detection, health tracking, and recipe recommendations.",
       "Integrated millet identification using camera input, image upload, and text-based search.",
@@ -35,7 +37,7 @@ const getAllProjects = () => ([
     tech: ["HTML", "CSS", "JavaScript", "Node.js", "SQL"],
     date: "Dec 2024",
     img: letterGenImg,
-    github: "https://github.com/yourusername/letter-generator",
+    github: "https://github.com/Meghana-108/letter-generator.git",
     points: [
       "Built a web app to generate personalized letters like invitations, leave requests, and birthday wishes.",
       "Implemented secure user authentication and session handling for personalized letter management.",
@@ -48,7 +50,7 @@ const getAllProjects = () => ([
     tech: ["React", "Node.js", "Express", "MongoDB", "CSS"],
     date: "May 2025",
     img: secureshareImg,
-    github: "https://github.com/yourusername/secure-text-sharing",
+    github: "https://github.com/Meghana-108/secure-share.git",
     points: [
       "Built a secure web app to share text messages using a unique 6-digit passkey system.",
       "Implemented sender/receiver flows to store and retrieve messages through REST APIs.",
@@ -172,25 +174,40 @@ export default function App() {
       <main className="pt-32 flex flex-col-reverse md:flex-row items-center justify-center px-6 py-28 max-w-6xl mx-auto gap-16 min-h-[110vh] relative z-10">
         <div className="md:w-1/2 text-center md:text-left">
           <SplitText
-            text="Hey, it's Meghana 👋"
+            text="Hey, it's Meghana "
             className="text-3xl md:text-5xl font-bold mb-6"
             splitType="words"
             delay={60}
           />
           <p className="text-gray-300 text-lg md:text-xl mb-10">
-            I love crafting smooth digital experiences with clean code & creative UI.
+              A Computer Science graduate with a keen interest in thoughtful design and problem solving.
           </p>
-          <button className="px-6 py-2 rounded-md border-2 border-purple-electric text-white hover:bg-purple-electric/10 hover:shadow-[0_0_15px_#610094] transition">
-            Let’s Connect
-          </button>
+<a
+  href="/Meghana_Resume.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-8 py-4 border border-purple-electric text-white rounded-md hover:bg-purple-electric/10 hover:shadow-[0_0_12px_#610094] transition text-m flex items-center gap-1"
+  style={{ width: "fit-content" }}
+>
+  <span className="leading-none">Resume</span>
+  <FiDownload className="text-sm leading-none" />
+</a>
+
         </div>
 
-        {/* Right Photo Placeholder */}
-        <div className="md:w-1/2 flex justify-center">
-       <div className="md:w-1/2 flex justify-center">
-  <Lottie animationData={heroAnim} loop={true} className="w-[300px] h-[300px]" />
+      {/* Right Photo Placeholder */}
+{/* Right Photo Placeholder */}
+<div className="md:w-1/2 flex justify-center items-center">
+  <div className="w-[450px] h-[450px] ml-24">
+    <Lottie
+      animationData={heroAnim}
+      loop={true}
+      className="w-full h-full"
+    />
+  </div>
 </div>
-        </div>
+
+
       </main>
 
       {/* 🎓 Education Section */}
@@ -272,74 +289,85 @@ export default function App() {
 
         </div>
       </section>
-  <section className="px-6 py-28 max-w-6xl mx-auto relative z-10 overflow-hidden">
-        <div className="absolute top-[12%] left-[8%] w-[250px] h-[250px] bg-purple-electric opacity-25 blur-[120px] rounded-full animate-pulse pointer-events-none z-0" />
-        <div className="absolute top-[30%] right-[15%] w-[300px] h-[300px] bg-purple-royal opacity-20 blur-[110px] rounded-full animate-ping pointer-events-none z-0" />
-        <div className="absolute bottom-[20%] left-[30%] w-[220px] h-[220px] bg-purple-electric opacity-30 blur-[100px] rounded-full animate-float pointer-events-none z-0" />
 
-        <h2 className="text-4xl font-bold mb-16 text-center relative z-10">Projects</h2>
-        <div className="space-y-24 relative z-10">
-          {allProjects.slice(0, visibleCount).map((proj, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.2 }}
-              className={`group flex flex-col ${i % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-12 md:gap-16 mb-12 bg-white/5 p-10 rounded-lg transition duration-500 hover:bg-purple-electric/10 hover:shadow-[0_0_20px_#610094]`}
-            >
-              <img
-                src={proj.img}
-                alt={proj.title}
-                className="w-full md:w-[380px] h-[230px] object-cover rounded-lg shadow-md"
-              />
-              <div className="flex-1">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-2xl font-semibold">{proj.title}</h3>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-400">{proj.date}</span>
-                    <a href={proj.github} target="_blank" rel="noopener noreferrer">
-                      <FaGithub className="text-purple-electric hover:text-purple-royal text-lg" />
-                    </a>
-                  </div>
-                </div>
-                <ul className="list-disc list-inside text-gray-300 space-y-1 text-sm mb-6">
-                  {proj.points.map((point, idx) => (
-                    <li key={idx}>{point}</li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap gap-3">
-                  {proj.tech.map((tech, idx) => (
-                    <span
-                      key={idx}
-                      className="px-4 py-1 rounded-md border-2 border-purple-electric text-sm"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
 
-          {/* Show More */}
-          <div className="text-center mt-10">
-            <button
-              onClick={() => setVisibleCount(showAll ? 3 : allProjects.length)}
-              className="text-white font-semibold hover:text-purple-electric transition text-xl"
-            >
-              {showAll ? "Show Less" : "View More Projects"}
-              <div className="flex justify-center mt-2">
-                {showAll ? (
-                  <FiChevronUp className="text-4xl text-purple-electric animate-bounce" />
-                ) : (
-                  <FiChevronDown className="text-4xl text-purple-electric animate-bounce" />
-                )}
-              </div>
-            </button>
+<section className="px-6 py-28 max-w-6xl mx-auto relative z-10 overflow-hidden">
+  {/* Glowing Backgrounds */}
+  <div className="absolute top-[8%] left-[74%] w-[150px] h-[150px] bg-purple-electric opacity-25 blur-[120px] rounded-full animate-pulse pointer-events-none z-0" />
+ <div className="absolute top-[10%] right-[15%] w-[300px] h-[300px] bg-purple-royal opacity-20 blur-[110px] rounded-full animate-ping pointer-events-none z-0" />
+ <div className="absolute bottom-[55%] left-[10%] w-[220px] h-[220px] bg-purple-electric opacity-30 blur-[100px] rounded-full animate-float pointer-events-none z-0" />
+<div className="absolute top-[65%] left-[74%] w-[150px] h-[150px] bg-purple-electric opacity-25 blur-[120px] rounded-full animate-pulse pointer-events-none z-0" />
+ 
+  <h2 className="text-4xl font-bold mb-16 text-center relative z-10 text-white">Projects</h2>
+
+  <div className="space-y-24 relative z-10">
+    {allProjects.slice(0, visibleCount).map((proj, i) => (
+      <motion.div
+        key={i}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: i * 0.2 }}
+       className={`flex flex-col md:flex-row ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''} items-center gap-8 bg-white/5 backdrop-blur-md rounded-xl p-6 min-h-[380px] hover:shadow-[0px_20px_30px_rgba(97,0,148,0.45)] transition-shadow duration-500`}
+              >
+        <img
+          src={proj.img}
+          alt={proj.title}
+          className="w-full md:w-[380px] h-[230px] object-cover rounded-lg shadow-md"
+        />
+        <div className="flex-1">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-2xl font-semibold text-white">{proj.title}</h3>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-400">{proj.date}</span>
+              <a href={proj.github} target="_blank" rel="noopener noreferrer">
+                <FaGithub className="text-purple-electric hover:text-purple-royal text-lg" />
+              </a>
+            </div>
           </div>
+          <ul className="list-disc list-inside text-gray-300 space-y-1 text-sm mb-6">
+            {proj.points.map((point, idx) => (
+              <li key={idx}>{point}</li>
+            ))}
+          </ul>
+          <div className="flex flex-wrap gap-x-4 gap-y-3">
+  {proj.tech.map((tech, idx) => (
+    <span
+      key={idx}
+      className="px-5 py-[6px] rounded-md border-2 border-purple-electric text-sm text-white hover:bg-purple-electric hover:text-white transition"
+    >
+      {tech}
+    </span>
+  ))}
+</div>
+
         </div>
-      </section>
+      </motion.div>
+    ))}
+
+    {/* Show More / Less */}
+  {/* <div className="text-center mt-10">
+  <button
+    onClick={() =>
+      setVisibleCount(showAll ? 3 : visibleCount + 3)
+    }
+    className="text-white font-semibold hover:text-purple-electric transition text-xl"
+  >
+    {showAll ? "Show Less" : "View More Projects"}
+    <div className="flex justify-center mt-2">
+      {showAll ? (
+        <FiChevronUp className="text-4xl text-purple-electric animate-bounce" />
+      ) : (
+        <FiChevronDown className="text-4xl text-purple-electric animate-bounce" />
+      )}
+    </div>
+  </button>
+</div> */}
+
+
+  </div>
+</section>
+
 
   
  <section className="px-6 py-28 max-w-5xl mx-auto relative z-10 overflow-hidden text-white">
@@ -359,28 +387,32 @@ export default function App() {
 
         {/* 🔗 Contact Links */}
         <div className="flex justify-center gap-12 text-sm mb-12">
-          <div className="flex flex-col items-center">
-            <div className="bg-white/10 p-3 rounded-lg mb-1 text-xl">
-              <FaEnvelope />
-            </div>
-            <p className="font-semibold">Email</p>
-            <p className="text-gray-400">me@example.com</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="bg-white/10 p-3 rounded-lg mb-1 text-xl">
-              <FaGithub />
-            </div>
-            <p className="font-semibold">GitHub</p>
-            <p className="text-gray-400">@your-github</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="bg-white/10 p-3 rounded-lg mb-1 text-xl">
-              <FaLinkedin />
-            </div>
-            <p className="font-semibold">LinkedIn</p>
-            <p className="text-gray-400">your-linkedin</p>
-          </div>
-        </div>
+  {/* Email */}
+  <div className="flex flex-col items-center">
+    <a href="meeraganesh108@gmail.com" className="bg-white/10 p-3 rounded-lg mb-1 text-xl hover:text-purple-electric transition">
+      <FaEnvelope />
+    </a>
+    <p className="font-semibold">Email</p>
+     </div>
+
+  {/* GitHub */}
+  <div className="flex flex-col items-center">
+    <a href="https://github.com/Meghana-108" target="_blank" rel="noopener noreferrer" className="bg-white/10 p-3 rounded-lg mb-1 text-xl hover:text-purple-electric transition">
+      <FaGithub />
+    </a>
+    <p className="font-semibold">GitHub</p>
+      </div>
+
+  {/* LinkedIn */}
+  <div className="flex flex-col items-center">
+    <a href="https://www.linkedin.com/in/meghana-417301262/" target="_blank" rel="noopener noreferrer" className="bg-white/10 p-3 rounded-lg mb-1 text-xl hover:text-purple-electric transition">
+      <FaLinkedin />
+    </a>
+    <p className="font-semibold">LinkedIn</p>
+    
+  </div>
+</div>
+
 
         {/* 📬 Contact Form */}
        <form ref={formRef} onSubmit={sendEmail} className="flex flex-col items-center">
