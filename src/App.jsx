@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { FiDownload } from "react-icons/fi";
-
+import { useInView } from "framer-motion";
 
 // import { FaPalette } from "react-icons/fa";
 // import { FaMagic } from "react-icons/fa";
@@ -105,6 +105,9 @@ export default function App() {
   const showAll = visibleCount >= allProjects.length;
   const formRef = useRef(null);
   const [isSent, setIsSent] = useState(false);
+  const ref = useRef(null);
+const isInView = useInView(ref, { once: false, amount: 0.5 });
+
 
   const sendEmail = async (e) => {
     e.preventDefault();
@@ -141,6 +144,29 @@ export default function App() {
   };
 
 
+{allProjects.slice(0, visibleCount).map((proj, i) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.6, once: true }); // triggers when 60% visible
+
+  return (
+    <motion.div
+      key={i}
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: i * 0.2 }}
+      className={`
+        flex flex-col md:flex-row ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''}
+        items-center gap-8 bg-white/5 backdrop-blur-md rounded-xl p-6 min-h-[380px]
+        transition-shadow duration-500 ease-in-out
+        ${isInView ? 'shadow-[0px_20px_30px_rgba(97,0,148,0.45)]' : ''}
+        hover:shadow-[0px_20px_30px_rgba(97,0,148,0.45)]
+      `}
+    >
+      {/* Card content remains same */}
+    </motion.div>
+  );
+})}
 
 
 
@@ -171,44 +197,57 @@ export default function App() {
 </header>
 
       {/* 👋 Hero Section */}
-      <main className="pt-32 flex flex-col-reverse md:flex-row items-center justify-center px-6 py-28 max-w-6xl mx-auto gap-16 min-h-[110vh] relative z-10">
-        <div className="md:w-1/2 text-center md:text-left">
-          <SplitText
-            text="Hey, it's Meghana "
-            className="text-3xl md:text-5xl font-bold mb-6"
-            splitType="words"
-            delay={60}
-          />
-          <p className="text-gray-300 text-lg md:text-xl mb-10">
-              A Computer Science graduate with a keen interest in thoughtful design and problem solving.
-          </p>
-<a
-  href="/Meghana_Resume.pdf"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="px-8 py-4 border border-purple-electric text-white rounded-md hover:bg-purple-electric/10 hover:shadow-[0_0_12px_#610094] transition text-m flex items-center gap-1"
-  style={{ width: "fit-content" }}
->
-  <span className="leading-none">Resume</span>
-  <FiDownload className="text-sm leading-none" />
-</a>
+     <main className="pt-32 flex flex-col md:flex-row items-center justify-center px-6 py-28 max-w-6xl mx-auto gap-16 min-h-[110vh] relative z-10">
 
-        </div>
-
-      {/* Right Photo Placeholder */}
-{/* Right Photo Placeholder */}
-<div className="md:w-1/2 flex justify-center items-center">
-  <div className="w-[450px] h-[450px] ml-24">
-    <Lottie
-      animationData={heroAnim}
-      loop={true}
-      className="w-full h-full"
+  {/* 📝 Left Text Content */}
+  <div className="md:w-1/2 text-center md:text-left">
+    <SplitText
+      text="Hey, it's Meghana "
+      className="text-3xl md:text-5xl font-bold mb-6"
+      splitType="words"
+      delay={60}
     />
+    <p className="text-gray-300 text-lg md:text-xl mb-10">
+      A Computer Science graduate with a keen interest in thoughtful design and problem solving.
+    </p>
+
+    {/* ✅ Desktop Button Only */}
+    <a
+      href="/Meghana_Resume.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hidden md:inline-block px-8 py-4 border border-purple-electric text-white rounded-md hover:bg-purple-electric/10 hover:shadow-[0_0_12px_#610094] transition text-m"
+      style={{ width: "fit-content" }}
+    >
+      <span className="leading-none">Resume</span>
+      <FiDownload className="text-sm inline-block ml-2" />
+    </a>
   </div>
-</div>
 
+  {/* 🎞️ Right Lottie Image */}
+  <div className="md:w-1/2 flex flex-col items-center">
+    <div className="w-[300px] h-[300px] md:w-[450px] md:h-[450px]">
+      <Lottie
+        animationData={heroAnim}
+        loop={true}
+        className="w-full h-full"
+      />
+    </div>
 
-      </main>
+    {/* ✅ Mobile Button Only */}
+    <a
+      href="/Meghana_Resume.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="md:hidden mt-6 px-8 py-4 border border-purple-electric text-white rounded-md hover:bg-purple-electric/10 hover:shadow-[0_0_12px_#610094] transition text-m"
+    >
+      <span className="leading-none">Resume</span>
+      <FiDownload className="text-sm inline-block ml-2" />
+    </a>
+  </div>
+
+</main>
+
 
       {/* 🎓 Education Section */}
       <section className="px-6 py-24 max-w-5xl mx-auto relative z-10">
@@ -290,26 +329,25 @@ export default function App() {
         </div>
       </section>
 
-
 <section className="px-6 py-28 max-w-6xl mx-auto relative z-10 overflow-hidden">
   {/* Glowing Backgrounds */}
   <div className="absolute top-[8%] left-[74%] w-[150px] h-[150px] bg-purple-electric opacity-25 blur-[120px] rounded-full animate-pulse pointer-events-none z-0" />
- <div className="absolute top-[10%] right-[15%] w-[300px] h-[300px] bg-purple-royal opacity-20 blur-[110px] rounded-full animate-ping pointer-events-none z-0" />
- <div className="absolute bottom-[55%] left-[10%] w-[220px] h-[220px] bg-purple-electric opacity-30 blur-[100px] rounded-full animate-float pointer-events-none z-0" />
-<div className="absolute top-[65%] left-[74%] w-[150px] h-[150px] bg-purple-electric opacity-25 blur-[120px] rounded-full animate-pulse pointer-events-none z-0" />
- 
+  <div className="absolute top-[10%] right-[15%] w-[300px] h-[300px] bg-purple-royal opacity-20 blur-[110px] rounded-full animate-ping pointer-events-none z-0" />
+  <div className="absolute bottom-[55%] left-[10%] w-[220px] h-[220px] bg-purple-electric opacity-30 blur-[100px] rounded-full animate-float pointer-events-none z-0" />
+  <div className="absolute top-[65%] left-[74%] w-[150px] h-[150px] bg-purple-electric opacity-25 blur-[120px] rounded-full animate-pulse pointer-events-none z-0" />
+  
   <h2 className="text-4xl font-bold mb-16 text-center relative z-10 text-white">Projects</h2>
 
   <div className="space-y-24 relative z-10">
     {allProjects.slice(0, visibleCount).map((proj, i) => (
       <motion.div
         key={i}
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: i * 0.2 }}
-       className={`flex flex-col md:flex-row ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''} items-center gap-8 bg-white/5 backdrop-blur-md rounded-xl p-6 min-h-[380px] hover:shadow-[0px_20px_30px_rgba(97,0,148,0.45)] transition-shadow duration-500`}
-              >
+        initial={{ opacity: 0, y: 40, scale: 0.95 }} // 👈 Zoom in setup
+        whileInView={{ opacity: 1, y: 0, scale: 1 }} // 👈 Zoom target
+        viewport={{ once: false, amount: 0.4 }} // 👈 triggers on scroll
+        transition={{ duration: 0.6, delay: i * 0.2, ease: "easeOut" }}
+        className={`flex flex-col md:flex-row ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''} items-center gap-8 bg-white/5 backdrop-blur-md rounded-xl p-6 min-h-[380px] hover:shadow-[0px_20px_30px_rgba(97,0,148,0.45)] transition-shadow duration-500`}
+      >
         <img
           src={proj.img}
           alt={proj.title}
@@ -331,40 +369,18 @@ export default function App() {
             ))}
           </ul>
           <div className="flex flex-wrap gap-x-4 gap-y-3">
-  {proj.tech.map((tech, idx) => (
-    <span
-      key={idx}
-      className="px-5 py-[6px] rounded-md border-2 border-purple-electric text-sm text-white hover:bg-purple-electric hover:text-white transition"
-    >
-      {tech}
-    </span>
-  ))}
-</div>
-
+            {proj.tech.map((tech, idx) => (
+              <span
+                key={idx}
+                className="px-5 py-[6px] rounded-md border-2 border-purple-electric text-sm text-white hover:bg-purple-electric hover:text-white transition"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </motion.div>
     ))}
-
-    {/* Show More / Less */}
-  {/* <div className="text-center mt-10">
-  <button
-    onClick={() =>
-      setVisibleCount(showAll ? 3 : visibleCount + 3)
-    }
-    className="text-white font-semibold hover:text-purple-electric transition text-xl"
-  >
-    {showAll ? "Show Less" : "View More Projects"}
-    <div className="flex justify-center mt-2">
-      {showAll ? (
-        <FiChevronUp className="text-4xl text-purple-electric animate-bounce" />
-      ) : (
-        <FiChevronDown className="text-4xl text-purple-electric animate-bounce" />
-      )}
-    </div>
-  </button>
-</div> */}
-
-
   </div>
 </section>
 
