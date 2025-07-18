@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
+
+
+
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { FiDownload } from "react-icons/fi";
 import { useInView } from "framer-motion";
@@ -103,46 +105,47 @@ export default function App() {
   const [visibleCount, setVisibleCount] = useState(3);
   const allProjects = getAllProjects();
   const showAll = visibleCount >= allProjects.length;
-  const formRef = useRef(null);
-  const [isSent, setIsSent] = useState(false);
+  const formRef = useRef();
+  const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+const [message, setMessage] = useState("");
+
+
+const [isSent, setIsSent] = useState(false);
   const ref = useRef(null);
 const isInView = useInView(ref, { once: false, amount: 0.5 });
+const sendEmail = async (e) => {
+  e.preventDefault();
 
+  try {
+    const response = await fetch("http://localhost:5000/api/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        message,
+      }),
+    });
 
-  const sendEmail = async (e) => {
-    e.preventDefault();
-    const data = {
-      name: formRef.current.name.value,
-      email: formRef.current.email.value,
-      message: formRef.current.message.value
-    };
+    const result = await response.json();
 
-    try {
-      const res = await fetch("/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      if (res.ok) {
-        setIsSent(true);
-        formRef.current.reset();
-        setTimeout(() => setIsSent(false), 5000);
-      } else {
-        try {
-          const error = await res.json();
-          alert("Failed to send email: " + error.message);
-        } catch (jsonError) {
-          // If the response is not JSON, display the raw text
-          const errorText = await res.text();
-          alert("Failed to send email: " + errorText);
-        }
-      }
-    } catch (err) {
-      alert("Something went wrong!");
+    if (result.success) {
+      setIsSent(true);
+      alert("✅ Email sent successfully!");
+      setName("");
+      setEmail("");
+      setMessage("");
+    } else {
+      alert("❌ Failed to send email.");
     }
-  };
-
+  } catch (error) {
+    console.error("Error sending email:", error);
+    alert("Something went wrong.");
+  }
+};
 
 {allProjects.slice(0, visibleCount).map((proj, i) => {
   const ref = useRef(null);
@@ -171,82 +174,63 @@ const isInView = useInView(ref, { once: false, amount: 0.5 });
 
 
   return (
-    <div className="relative min-h-screen bg-black text-white font-sans overflow-hidden">
-      {/* 🔮 Smoky Animated Background Blobs */}
-{/* 🔮 Smoky Purple Background Blobs */}
-<div className="absolute top-[80px] left-[-30px] w-[400px] h-[400px] bg-purple-electric opacity-15 blur-[120px] rounded-full pointer-events-none z-0 animate-float-slow" />
-<div className="absolute top-[560px] left-[720px] w-[200px] h-[200px] bg-purple-electric opacity-25 blur-[120px] rounded-full pointer-events-none z-0 animate-float-slow" />
-<div className="absolute top-[150px] right-[-40px] w-[300px] h-[300px] bg-purple-electric opacity-25 blur-[120px] rounded-full pointer-events-none z-0 animate-float-slow" />
-<div className="absolute bottom-[-100px] right-[5%] w-[320px] h-[320px] bg-purple-royal opacity-15 blur-[150px] rounded-full pointer-events-none z-0 animate-ping" />
+ <div className="relative min-h-screen bg-black text-white font-sans overflow-hidden">
+  {/* 🔮 Glowing Animated Background Blobs */}
+  <div className="absolute top-[80px] left-[-30px] w-[400px] h-[400px] bg-purple-electric opacity-15 blur-[120px] rounded-full pointer-events-none z-0 animate-float-slow" />
+  <div className="absolute top-[560px] left-[720px] w-[200px] h-[200px] bg-purple-electric opacity-25 blur-[120px] rounded-full pointer-events-none z-0 animate-float-slow" />
+  <div className="absolute top-[150px] right-[-40px] w-[300px] h-[300px] bg-purple-electric opacity-25 blur-[120px] rounded-full pointer-events-none z-0 animate-float-slow" />
+  <div className="absolute bottom-[-100px] right-[5%] w-[320px] h-[320px] bg-purple-royal opacity-15 blur-[150px] rounded-full pointer-events-none z-0 animate-float-slow" />
 
-      {/* 🔗 Navbar */}
-          {/* 🔮 Smoky Animated Background Blobs */}
-{/* 🔮 Smoky Purple Background Blobs */}
-{/* <div className="absolute top-[520px] left-[-70px] w-[400px] h-[400px] bg-purple-electric opacity-15 blur-[120px] rounded-full pointer-events-none z-0 animate-float-slow" /> */}
-{/* <div className="absolute top-[50px] left-[20px] w-[200px] h-[200px] bg-purple-electric opacity-15 blur-[120px] rounded-full pointer-events-none z-0 animate-float-slow" /> */}
-{/* <div className="absolute top-[150px] right-[40px] w-[300px] h-[300px] bg-purple-electric opacity-15 blur-[120px] rounded-full pointer-events-none z-0 animate-float-slow" /> */}
-{/* <div className="absolute bottom-[-90px] right-[5%] w-[320px] h-[320px] bg-purple-royal opacity-15 blur-[150px] rounded-full pointer-events-none z-0 animate-ping" /> */}
+  {/* 🔗 Navbar */}
+  <header className="fixed top-0 left-0 w-full bg-black/70 backdrop-blur-md z-50 shadow-md flex justify-between items-center px-10 py-3">
+    <div className="text-2xl font-semibold tracking-wide">🐘</div>
+  </header>
 
-      {/* 🔗 Navbar */}
-     <header className="fixed top-0 left-0 w-full bg-black/70 backdrop-blur-md z-50 shadow-md flex justify-between items-center px-10 py-3">
-  <div className="text-2xl font-semibold tracking-wide">🐘</div>
-  {/* <div className="flex gap-6 text-2xl">
-    <FaMagic className="hover:text-orange-soft" />
-    <FaPalette className="hover:text-orange-soft" />
-  </div> */}
-</header>
-
-      {/* 👋 Hero Section */}
-     <main className="pt-32 flex flex-col md:flex-row items-center justify-center px-6 py-28 max-w-6xl mx-auto gap-16 min-h-[110vh] relative z-10">
-
-  {/* 📝 Left Text Content */}
-  <div className="md:w-1/2 text-center md:text-left">
-    <SplitText
-      text="Hey, it's Meghana "
-      className="text-3xl md:text-5xl font-bold mb-6"
-      splitType="words"
-      delay={60}
-    />
-    <p className="text-gray-300 text-lg md:text-xl mb-10">
-      A Computer Science graduate with a keen interest in thoughtful design and problem solving.
-    </p>
-
-    {/* ✅ Desktop Button Only */}
-    <a
-      href="/Meghana_Resume.pdf"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="hidden md:inline-block px-8 py-4 border border-purple-electric text-white rounded-md hover:bg-purple-electric/10 hover:shadow-[0_0_12px_#610094] transition text-m"
-      style={{ width: "fit-content" }}
-    >
-      <span className="leading-none">Resume</span>
-      <FiDownload className="text-sm inline-block ml-2" />
-    </a>
-  </div>
-
-  {/* 🎞️ Right Lottie Image */}
-  <div className="md:w-1/2 flex flex-col items-center">
-    <div className="w-[300px] h-[300px] md:w-[450px] md:h-[450px]">
-      <Lottie
-        animationData={heroAnim}
-        loop={true}
-        className="w-full h-full"
+  {/* 👋 Hero Section */}
+  <main className="pt-32 flex flex-col md:flex-row items-center justify-center px-6 py-28 max-w-6xl mx-auto gap-16 min-h-[110vh] relative z-10">
+    {/* 📝 Left Text Content */}
+    <div className="md:w-1/2 text-center md:text-left">
+      <SplitText
+        text="Hey, it's Meghana "
+        className="text-3xl md:text-5xl font-bold mb-6"
+        splitType="words"
+        delay={60}
       />
+      <p className="text-gray-300 text-lg md:text-xl mb-10">
+        A Computer Science graduate with a keen interest in thoughtful design and problem solving.
+      </p>
+
+      {/* ✅ Desktop Button Only */}
+      <a
+        href="/Meghana_Resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hidden md:inline-block px-8 py-4 border border-purple-electric text-white rounded-md hover:bg-purple-electric/10 hover:shadow-[0_0_12px_#610094] transition text-m"
+        style={{ width: "fit-content" }}
+      >
+        <span className="leading-none">Resume</span>
+        <FiDownload className="text-sm inline-block ml-2" />
+      </a>
     </div>
 
-    {/* ✅ Mobile Button Only */}
-    <a
-      href="/Meghana_Resume.pdf"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="md:hidden mt-6 px-8 py-4 border border-purple-electric text-white rounded-md hover:bg-purple-electric/10 hover:shadow-[0_0_12px_#610094] transition text-m"
-    >
-      <span className="leading-none">Resume</span>
-      <FiDownload className="text-sm inline-block ml-2" />
-    </a>
-  </div>
+    {/* 🎞️ Right Lottie Image */}
+    <div className="md:w-1/2 flex flex-col items-center">
+      <div className="w-[300px] h-[300px] md:w-[450px] md:h-[450px]">
+        <Lottie animationData={heroAnim} loop={true} className="w-full h-full" />
+      </div>
 
-</main>
+      {/* ✅ Mobile Button Only */}
+      <a
+        href="/Meghana_Resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="md:hidden mt-6 px-8 py-4 border border-purple-electric text-white rounded-md hover:bg-purple-electric/10 hover:shadow-[0_0_12px_#610094] transition text-m"
+      >
+        <span className="leading-none">Resume</span>
+        <FiDownload className="text-sm inline-block ml-2" />
+      </a>
+    </div>
+  </main>
 
 {/* 🎓 Education Section */}
 <section className="px-4 py-16 sm:px-6 max-w-5xl mx-auto relative z-10">
@@ -346,7 +330,7 @@ const isInView = useInView(ref, { once: false, amount: 0.5 });
         whileInView={{ opacity: 1, y: 0, scale: 1 }} // 👈 Zoom target
         viewport={{ once: false, amount: 0.4 }} // 👈 triggers on scroll
         transition={{ duration: 0.6, delay: i * 0.2, ease: "easeOut" }}
-        className={`flex flex-col md:flex-row ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''} items-center gap-8 bg-white/5 backdrop-blur-md rounded-xl p-6 min-h-[380px] hover:shadow-[0px_20px_30px_rgba(97,0,148,0.45)] transition-shadow duration-500`}
+       className={`flex flex-col md:flex-row ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''} items-center gap-8 bg-white/5 backdrop-blur-md rounded-xl p-6 min-h-[380px] shadow-[0px_20px_30px_rgba(97,0,148,0.45)] md:shadow-none md:hover:shadow-[0px_20px_30px_rgba(97,0,148,0.45)] transition-shadow duration-500`}
       >
         <img
           src={proj.img}
@@ -436,35 +420,44 @@ const isInView = useInView(ref, { once: false, amount: 0.5 });
     <div className="flex flex-col md:flex-row gap-6 mb-6">
       <div className="w-full">
         <label className="block text-sm mb-1 text-center md:text-left">Email</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="developer@domain.com"
-          required
-          className="w-full bg-transparent border border-purple-electric rounded-md px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-electric"
-        />
+   <input
+  type="email"
+  name="email"
+  placeholder="developer@domain.com"
+  required
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  className="w-full bg-transparent border border-purple-electric rounded-md px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-electric"
+/>
+
       </div>
       <div className="w-full">
         <label className="block text-sm mb-1 text-center md:text-left">Name</label>
-        <input
-          type="text"
-          name="name"
-          placeholder="Developer X"
-          required
-          className="w-full bg-transparent border border-purple-electric rounded-md px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-electric"
-        />
+    <input
+  type="text"
+  name="name"
+  placeholder="Developer X"
+  required
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+  className="w-full bg-transparent border border-purple-electric rounded-md px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-electric"
+/>
+
       </div>
     </div>
     <div className="mb-6">
       <label className="block text-sm mb-1 text-center md:text-left">Message</label>
       <div className="flex flex-col md:flex-row gap-6">
-        <textarea
-          name="message"
-          rows="4"
-          placeholder="What's up?"
-          required
-          className="w-full bg-transparent border border-purple-electric rounded-md px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-electric"
-        ></textarea>
+     <textarea
+  name="message"
+  rows="4"
+  placeholder="What's up?"
+  required
+  value={message}
+  onChange={(e) => setMessage(e.target.value)}
+  className="w-full bg-transparent border border-purple-electric rounded-md px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-electric"
+/>
+
         <button
           type="submit"
           className="w-full md:w-auto px-6 py-2 rounded-md border-2 border-purple-electric text-white transition hover:bg-purple-electric/10"
