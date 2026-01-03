@@ -189,7 +189,7 @@ export default function App() {
       <main className="pt-32 flex flex-col-reverse md:flex-row items-center justify-center px-6 py-28 max-w-6xl mx-auto gap-16 min-h-[110vh] relative z-10">
         <div className="md:w-1/2 text-center md:text-left">
           <SplitText
-            text="Hey, it's Meghana 👋"
+            text="Hey, it's Meghana 🙏🏻"
             className="text-3xl md:text-5xl font-bold mb-6"
             splitType="words"
             delay={60}
@@ -197,9 +197,16 @@ export default function App() {
           <p className="text-gray-300 text-lg md:text-xl mb-10">
             I love crafting smooth digital experiences with clean code & creative UI.
           </p>
-          <button className="px-6 py-2 rounded-md border-2 border-purple-electric text-white hover:bg-purple-electric/10 hover:shadow-[0_0_15px_#610094] transition">
-            Let’s Connect
-          </button>
+       <a 
+  href="/Meghana_Resume.pdf" 
+  download="Meghana_Resume.pdf"
+  className="inline-flex items-center gap-2 px-4 py-2 rounded-md border-2 border-purple-electric text-white hover:bg-purple-electric/10 hover:shadow-[0_0_15px_#610094] transition text-sm md:text-base"
+>
+  <span>Resume</span>
+  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+  </svg>
+</a>
         </div>
 
         {/* Right Photo Placeholder */}

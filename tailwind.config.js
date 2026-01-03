@@ -9,6 +9,7 @@ module.exports = {
           deep: "#150050",
           royal: "#3F0071",
           electric: "#610094",
+          meow: "#d4f41eff",
         },
       },
       animation: {
